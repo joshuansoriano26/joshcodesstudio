@@ -136,12 +136,60 @@
                   </div>
           
                   <div class="col-12 text-center">
-                    <div class="loading" style="display:none;">Loading...</div>
-                    <div class="error-message" style="display:none;">Something went wrong. Please try again.</div>
-                    <div class="sent-message" style="display:none;">Your message has been sent. Thank you!</div>
-          
-                    <button type="submit" class="btn btn-primary">Send Message</button>
+                    <!-- Messages -->
+                    <div class="loading mb-2" style="display:none;">
+                      <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                      <p class="mt-2">Sending your message...</p>
+                    </div>
+                  
+                    <div class="error-message alert alert-danger d-none mb-2" role="alert">
+                      Something went wrong. Please try again.
+                    </div>
+                  
+                    <div class="sent-message alert alert-success d-none mb-2" role="alert">
+                      Your message has been sent. Thank you!
+                    </div>
+                  
+                    <!-- Button -->
+                    <button type="submit" class="btn btn-gradient btn-lg">
+                      <i class="bi bi-envelope-fill me-2"></i>Send Message
+                    </button>
                   </div>
+                  
+                  <style>
+                  /* Gradient Button */
+                  .btn-gradient {
+                    background: linear-gradient(45deg, #20c997, #0dcaf0);
+                    border: none;
+                    color: white;
+                    font-weight: 600;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                  }
+                  .btn-gradient:hover {
+                    transform: translateY(-3px);
+                    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+                  }
+                  
+                  /* Messages */
+                  .loading p {
+                    font-weight: 500;
+                    color: #20c997;
+                  }
+                  .alert {
+                    font-weight: 500;
+                    border-radius: 0.5rem;
+                    animation: fadeIn 0.5s ease-in-out;
+                  }
+                  
+                  /* Fade in animation */
+                  @keyframes fadeIn {
+                    from {opacity: 0; transform: translateY(-10px);}
+                    to {opacity: 1; transform: translateY(0);}
+                  }
+                  </style>
                 </div>
               </form>
             </div>
