@@ -29,52 +29,60 @@
 <body class="contact-page">
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.querySelector('form[name="contact"]');
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form[action*="formspree"]');
     
-        form.addEventListener('submit', function(e) {
-            e.preventDefault(); // prevent default Netlify submit for demo
-    
-            // Show loading toast
-            Swal.fire({
-                toast: true,
-                position: 'top-end',
-                icon: 'info',
-                title: 'Sending message...',
-                showConfirmButton: false,
-                timer: 2000,
-                didOpen: () => Swal.showLoading()
-            });
-    
-            // Simulate Netlify async submission
-            setTimeout(() => {
-                // Random success/error simulation (replace with actual handling)
-                const success = true; // change based on server response
-    
-                if(success) {
-                    Swal.fire({
-                        toast: true,
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Your message has been sent. Thank you!',
-                        showConfirmButton: false,
-                        timer: 3000
-                    });
-                    form.reset();
-                } else {
-                    Swal.fire({
-                        toast: true,
-                        position: 'top-end',
-                        icon: 'error',
-                        title: 'Something went wrong. Please try again.',
-                        showConfirmButton: false,
-                        timer: 3000
-                    });
-                }
-            }, 2000);
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+  
+      // Show loading alert
+      Swal.fire({
+        title: 'Sending...',
+        text: 'Please wait while your message is being sent.',
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading()
+      });
+  
+      const data = new FormData(form);
+  
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
         });
+  
+        Swal.close(); // close loading state
+  
+        if (response.ok) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Message Sent!',
+            text: 'Thanks for reaching out — I’ll get back to you soon.',
+            confirmButtonColor: '#20c997'
+          });
+          form.reset();
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: 'Something went wrong. Please try again later.',
+            confirmButtonColor: '#d33'
+          });
+        }
+      } catch (error) {
+        Swal.close();
+        Swal.fire({
+          icon: 'error',
+          title: 'Network Error',
+          text: 'Please check your connection and try again.',
+          confirmButtonColor: '#d33'
+        });
+      }
     });
-  </script>    
+  });
+  </script>
+  
 
   <header id="header" class="header d-flex align-items-center light-background sticky-top">
     <div class="container position-relative d-flex align-items-center justify-content-between">
